@@ -24,3 +24,24 @@ Both solutions could be implemented with high-availability standards.
 Choosing previous solutions we can have more than one TourProcessor instance, and, paying attention to race conditions in website db, we can persist data in parallel.
 
 If possible, we could also use a logging system that make us able to aggregate data and make importers improve the logging-related latency. One solution could be to make processes write on stdin/stderr channels and use a tool like FluentD that, if we are in a containerized environment, reads from channels of our containers, then send data to Logstash instance(s) to make us able to log to an Elasticsearch cluster. Then we can aggregate and query our data using Kibana.  
+
+**How would you ensure your chosen architecture is working as expected?**
+
+We have to, first of all, to decide metrics to be able to understand which is happening: how many files are we importing? How many messages the message broker could manage without be overwhelmed?
+
+We can use tools like Prometheus to store events about our architecture, use its alert manager to send notifications about critical issues and make dashboards using Grafana to understand what's happening and what's happened.
+
+Then, I would suggest to make some stress test like adding many importers with tons of data to check if our system is correctly scaling.
+
+**For the new architecture you designed in answer to the question above, if
+you had to start from scratch, what team do you think you would need to
+pull off an MVP in 3 weeks? What would you leave outside this MVP and
+how would you prioritize the backlog?**
+
+Suggested team: 
+- one developer that implement libraries for make services able to communicate using message broker;
+- one or more devops to make architecture ready for minimum needs;
+- one developer that makes mocks tour importer operators;
+- one developer that implements tour processor;
+- one developer to manage databases and logging needs;
+- one team lead that coordinates everybody.
