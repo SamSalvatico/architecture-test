@@ -68,4 +68,10 @@ Backlog (1 is higher):
 5. tests for a complete workflow.
 
 
+** For audit reasons, once the MVP is live, we would like to keep a snapshot of what data was pulled from Operators' APIs. How would you implement that? **
+
+It depends on which method of storage we use
+- file system, we can choose cloud storages like S3 with replication in different regions to avoid loss of data;
+- non-relational database like MongoDb, we can use dedicated tools for clusters like the following one: https://docs.opsmanager.mongodb.com/current/reference/api/snapshots/.
+
 ## Implementation
