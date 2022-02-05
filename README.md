@@ -27,7 +27,10 @@ If possible, we could also use a logging system that make us able to aggregate d
 
 **How would you ensure your chosen architecture is working as expected?**
 
+
 We have to, first of all, to decide metrics to be able to understand which is happening: how many files are we importing? How many messages the message broker could manage without be overwhelmed?
+
+Unit testing, behavioural testing, integration testing. Tests, tests, tests.
 
 We can use tools like Prometheus to store events about our architecture, use its alert manager to send notifications about critical issues and make dashboards using Grafana to understand what's happening and what's happened.
 
@@ -39,9 +42,24 @@ pull off an MVP in 3 weeks? What would you leave outside this MVP and
 how would you prioritize the backlog?**
 
 Suggested team: 
-- one developer that implement libraries for make services able to communicate using message broker;
+- one developer that implements libraries for make services able to communicate using message broker;
 - one or more devops to make architecture ready for minimum needs;
 - one developer that makes mocks tour importer operators;
 - one developer that implements tour processor;
-- one developer to manage databases and logging needs;
 - one team lead that coordinates everybody.
+
+Leave outside:
+- monitoring architecture like Prometheus, Grafana, ...;
+- low-latency log architecture;
+- high availability fine-grained configurations;
+- scalability tests;
+- fine-grained testing.
+
+Backlog (1 is higher):
+1. decide, broadly, TourRadar tour's formats;
+2. implement tour processors and importers;
+3. broadly implement the architecture adding Helm charts for RabbitMq, MongoDB, ..
+4. make services able to communicate between each other;
+5. tests for a complete workflow.
+
+
