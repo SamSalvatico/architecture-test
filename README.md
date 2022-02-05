@@ -48,8 +48,10 @@ Suggested team:
 - one developer that implements libraries for make services able to communicate using message broker;
 - one or more devops to make architecture ready for minimum needs;
 - one developer that makes mocks tour importer operators;
-- one developer that implements tour processor;
+- one or more developers that implements tour processor;
 - one team lead that coordinates everybody.
+
+All developers must have a senority that make them able to work with minimum guidance from other developers. This is because in 3 weeks the time we have to understand what we need to do is very poor.
 
 Leave outside:
 - monitoring architecture like Prometheus, Grafana, ...;
