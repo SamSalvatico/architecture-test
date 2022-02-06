@@ -20,7 +20,7 @@ performance, scalability, and reliability?**
 To start, I would suggest to insert a message broker like RabbitMq in the architecture to improve ways services communicate between each other.
 After that, we could choose to use JSON or a format like Protobuf as payload for our messages.
 
-If there is possibility to choose the way the data are imported we can opt for a *push* pattern, so the operators could invoke a REST endpoint, possibly balanced thanks to a load balancer like HAProxy, sending updated data to optimize imports. Then the messages will be written on a queue and asynchronously managed. We need to pay attention to the order of the imported data.
+If there is possibility to choose the way the data are imported we can opt for a *push* pattern, so the operators could invoke a REST endpoint, possibly balanced thanks to a load balancer like HAProxy, or we can subscribe to a PubSub topic, sending updated data to optimize imports. Then the messages will be written on a queue and asynchronously managed. We need to pay attention to the order of the imported data.
 
 I would suggest to change the way importers write processed data. We could choose between two ways:
 - if processed data from operator are *small* (we must make tests to decide what *small* means) we could send each imported tour as a new message to our message broker. On the other side, we can have one or more processes that listen for new messages and spawn new processes to import data in our db. Pros: high scalability. Cons: high throughput, if we want to historicize data got from operators, we need to add a storage (db/filesystem);

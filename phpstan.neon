@@ -1,0 +1,10 @@
+parameters:
+	level: 7
+	paths:
+		- app
+		- tests
+	checkMissingIterableValueType: false
+	ignoreErrors:
+	checkGenericClassInNonGenericObjectType: false
+	excludePaths:
+		analyseAndScan:
