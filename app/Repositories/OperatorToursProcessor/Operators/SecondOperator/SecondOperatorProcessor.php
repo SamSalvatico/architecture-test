@@ -14,4 +14,11 @@ class SecondOperatorProcessor implements ProcessorContract
     {
         return [];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function ensureInputContentIsValid(ToImportToursContent $toImportToursContent): void
+    {
+    }
 }

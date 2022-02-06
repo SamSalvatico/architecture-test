@@ -15,7 +15,7 @@ class OperatourToursProcessorFactory
         $this->operatorChooser = $operatorChooser;
     }
 
-    protected function buildProcessor(ToImportToursContent $toImportToursContent): ProcessorContract
+    public function buildProcessor(ToImportToursContent $toImportToursContent): ProcessorContract
     {
         return $this->operatorChooser->getProcessor($toImportToursContent);
     }
@@ -26,6 +26,7 @@ class OperatourToursProcessorFactory
     public function getRadarTours(ToImportToursContent $toImportToursContent): array
     {
         $processor = $this->buildProcessor($toImportToursContent);
+        $processor->ensureInputContentIsValid($toImportToursContent);
         return $processor->getRadarTours($toImportToursContent);
     }
 }
