@@ -10,7 +10,7 @@ class TourOperatorsControllerTest extends TestCase
     /**
      * @dataProvider importToursProvider
      */
-    public function testImportToursReturns422IfWrongBody(array $currentBody)
+    public function testImportToursReturns422IfWrongBody(array $currentBody): void
     {
         $response = $this->postJson(
             '/api/tour_operators/import',
@@ -20,7 +20,7 @@ class TourOperatorsControllerTest extends TestCase
         $response->assertStatus(422);
     }
 
-    public function testImportToursReturnsSuccessfulResponse()
+    public function testImportToursReturnsSuccessfulResponse(): void
     {
         $response = $this->postJson(
             '/api/tour_operators/import',
