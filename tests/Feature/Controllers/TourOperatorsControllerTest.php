@@ -24,7 +24,7 @@ class TourOperatorsControllerTest extends TestCase
     {
         $response = $this->postJson(
             '/api/tour_operators/import',
-            ["tours_data" => ["a" => "b"], "operator_id" => 'aaaa'],
+            ["tours_data" => ["a" => "b"], "operator_id" => 'first'],
         );
 
         $response->assertSuccessful();

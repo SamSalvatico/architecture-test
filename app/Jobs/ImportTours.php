@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Repositories\OperatorToursProcessor\OperatourToursProcessorFactory;
 use App\Repositories\TourOperators\ToImportToursContent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -36,6 +37,8 @@ class ImportTours implements ShouldQueue
      */
     public function handle()
     {
-        echo $this->toImportToursContent->eventId();
+        /** @var  OperatourToursProcessorFactory $operatorProcessorFactory*/
+        $operatorProcessorFactory = app(OperatourToursProcessorFactory::class);
+        $operatorProcessorFactory->getRadarTours($this->toImportToursContent);
     }
 }

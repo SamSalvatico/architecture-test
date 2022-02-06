@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\ImportManager\ImportManagerContract;
 use App\Repositories\ImportManager\ImportManagerStubRepository;
+use App\Repositories\OperatorToursProcessor\OperatorChooser\OperatorChooserContract;
+use App\Repositories\OperatorToursProcessor\OperatorChooser\SimpleOperatorChooser;
 use App\Repositories\TourOperators\TourOperatorsContract;
 use App\Repositories\TourOperators\TourOperatorsDefaultRepository;
 use Illuminate\Support\ServiceProvider;
@@ -34,5 +36,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(ImportManagerContract::class, ImportManagerStubRepository::class);
         $this->app->bind(TourOperatorsContract::class, TourOperatorsDefaultRepository::class);
+        $this->app->bind(OperatorChooserContract::class, SimpleOperatorChooser::class);
     }
 }
