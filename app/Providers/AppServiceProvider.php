@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\ImportManager\ImportManagerContract;
+use App\Repositories\ImportManager\ImportManagerStubRepository;
+use App\Repositories\TourOperators\TourOperatorsContract;
+use App\Repositories\TourOperators\TourOperatorsDefaultRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->bindCustomRepositories();
     }
 
     /**
@@ -24,5 +28,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+    }
+
+    private function bindCustomRepositories(): void
+    {
+        $this->app->bind(ImportManagerContract::class, ImportManagerStubRepository::class);
+        $this->app->bind(TourOperatorsContract::class, TourOperatorsDefaultRepository::class);
     }
 }

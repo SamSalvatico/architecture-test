@@ -3,6 +3,7 @@
 namespace App\Repositories\TourOperators;
 
 use App\Exceptions\TourImport\EnqueueTourException;
+use App\Jobs\ImportTours;
 use App\Repositories\ImportManager\ImportManagerContract;
 use Exception;
 
@@ -20,10 +21,10 @@ class TourOperatorsDefaultRepository implements TourOperatorsContract
         array $content
     ): string {
         $eventId = $this->importManager->getNextEventId();
-        $enqueued = $this->tryToEnqueueTours($operatorId, $content, $eventId);
+        $toImportToursContent = ToImportToursContent::box($operatorId, $content, $eventId);
+        $enqueued = $this->tryToEnqueueTours($toImportToursContent);
 
-        if($enqueued) 
-        {
+        if ($enqueued) {
             return $eventId;
         }
 
@@ -31,15 +32,19 @@ class TourOperatorsDefaultRepository implements TourOperatorsContract
         throw new EnqueueTourException("Cannot enqueue this import, retry later...");
     }
 
-    private function tryToEnqueueTours(string $operatorId, array $content, string $eventId): bool {
+    private function tryToEnqueueTours(ToImportToursContent $content): bool
+    {
         try {
-            $this->enqueueTours($operatorId, $content, $eventId);
-        } catch(Exception) {
+            $this->enqueueTours($content);
+        } catch (Exception) {
             return false;
         }
+
+        return true;
     }
 
-    private function enqueueTours(string $operatorId, array $content, string $eventId): void {
-
+    private function enqueueTours(ToImportToursContent $content): void
+    {
+        ImportTours::dispatch($content);
     }
 }
