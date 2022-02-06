@@ -25,7 +25,7 @@ class ProcessTourRequest extends FormRequest
     {
         return [
             "operator_id" => "required|string",
-            "tours_data" => "required"
+            "tours_data" => "required|array"
         ];
     }
 }
