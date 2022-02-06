@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function bindCustomRepositories(): void
     {
-        $this->app->bind(ImportManagerContract::class, ImportManagerStubRepository::class);
+        $this->app->singleton(ImportManagerContract::class, ImportManagerStubRepository::class);
         $this->app->bind(TourOperatorsContract::class, TourOperatorsDefaultRepository::class);
     }
 }
