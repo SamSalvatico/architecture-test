@@ -4,7 +4,7 @@ parameters:
 		- app
 		- tests
 	checkMissingIterableValueType: false
-	ignoreErrors:
+	#ignoreErrors:
 	checkGenericClassInNonGenericObjectType: false
-	excludePaths:
-		analyseAndScan:
+	#excludePaths:
+	#	analyseAndScan:
