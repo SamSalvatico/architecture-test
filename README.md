@@ -1,6 +1,7 @@
 # TourRadar
 
 * [Questions](#questions)
+* [Startup](#startup)
 * [Implementation](#implementation)
 
 ## Questions
@@ -76,5 +77,50 @@ Backlog (1 is higher):
 It depends on which method of storage we use
 - file system, we can choose cloud storages like S3 with replication in different regions to avoid loss of data;
 - non-relational database like MongoDb, we can use dedicated tools for clusters like the following one: https://docs.opsmanager.mongodb.com/current/reference/api/snapshots/.
+
+## Startup
+
+### Project
+
+The project is based on [Laravel 8](https://laravel.com/docs/8.x) and uses PHP8.
+
+### Prerequisites
+
+- [Docker](https://docker.com) installed to run it using Sail.
+
+### Start with Makefile
+
+`cd` into the **architecture-test** root folder.
+
+Running the following command you will start the application thanks to docker compose using the `docker-compose.yml` file you can find in the root folder. 
+```bash
+$ make install
+```
+
+Now you're ready to party!
+
+The application is ready on port 8080 of localhost.
+
+### Tests
+The tests run using PHPUnit, PHPcs and PHPstan.
+
+#### With Makefile
+
+The next command will run PHPstan, PHPcs and PHPUnit
+```bash
+$ make test
+```
+To simply run phpunit
+
+```
+$ ./vendor/bin/sail test
+```
+
+#### Suites
+
+All the test suites can be found at:
+- *tests/Feature* for the feature tests;
+- *tests/Unit* for unit tests.
+
 
 ## Implementation
