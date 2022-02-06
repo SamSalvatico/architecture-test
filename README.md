@@ -3,6 +3,7 @@
 * [Questions](#questions)
 * [Startup](#startup)
 * [Implementation](#implementation)
+* [Production TODO](#production-todo)
 
 ## Questions
 
@@ -112,7 +113,7 @@ $ make test
 ```
 To simply run phpunit
 
-```
+```bash
 $ ./vendor/bin/sail test
 ```
 
@@ -124,3 +125,21 @@ All the test suites can be found at:
 
 
 ## Implementation
+
+I tried to implement the 'first part' of the flow, from the API invokation from the operator to the transformation to a *TourRadar Tour* object.
+In order: 
+1. an operator invokes the `POST api/tour_operators/import` endpoint with its operator_id and new tours' content;
+2. we provide a first level of input validation; 
+3. we generate an `event_id` to trace the request from the operator;
+4. we enqueue the input to process it asynchronously (currently, for testing purpose, the queue is set as *sync* in .env);
+5. we transform the operator tours to our own internal object;
+6. we store our objects to make other processes able to download related data and persist them definitely. 
+
+## Production TODO
+
+The most important things to do before we can move the flow in a production environment are:
+- manage REST APIs authentication;
+- choose a queue driver that make us able to asynchronously process multiple events;
+- add missing tests;
+- improve logging;
+- so much more.
