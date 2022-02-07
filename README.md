@@ -97,8 +97,27 @@ Running the following command you will start the application thanks to docker co
 ```bash
 $ make install
 ```
+> N.B. The previos command works in a Linux environment, in WSL, or in a Mac Os environment (see the hint in the Makefile if your case is the last one).
 
 Now you're ready to party!
+
+To check if it is working you can invoke `POST http://localhost:8080/api/tour_operators/import` with this body
+```json
+{
+    "operator_id": "first",
+    "tours_data": [
+        {
+            "first_operator_id": "def"
+        }
+    ]
+}
+```
+If it is working it must send a body like this back to you
+```json
+{
+    "event_id": "ac707ef6cef7222eaae1f7cbc0638c51"
+}
+```
 
 The application is ready on port 8080 of localhost.
 
