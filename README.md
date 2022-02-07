@@ -124,6 +124,8 @@ The application is ready on port 8080 of localhost.
 ### Tests
 The tests run using PHPUnit, PHPcs and PHPstan.
 
+> Disclaimer: the amount of time available to me to implement the solution didn't allow me to write a good amount of tests. I wrote some tests to show the way I usually implement them.
+
 #### With Makefile
 
 The next command will run PHPstan, PHPcs and PHPUnit
