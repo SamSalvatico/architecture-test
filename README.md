@@ -129,11 +129,33 @@ All the test suites can be found at:
 I tried to implement the 'first part' of the flow, from the API invokation from the operator to the transformation to a *TourRadar Tour* object.
 In order: 
 1. an operator invokes the `POST api/tour_operators/import` endpoint with its operator_id and new tours' content;
-2. we provide a first level of input validation; 
-3. we generate an `event_id` to trace the request from the operator;
+2. we generate an `event_id` to trace the request from the operator;
+3. understand which operator make the requests and provide a first level of input validation;
 4. we enqueue the input to process it asynchronously (currently, for testing purpose, the queue is set as *sync* in .env);
 5. we transform the operator tours to our own internal object;
 6. we store our objects to make other processes able to download related data and persist them definitely. 
+
+
+### 1 - API
+- Added the *app/Http/Controllers/TourOperatorsController.php* controller that implements the *importTours* method. The body is validated by *app/Http/Requests/ProcessTourRequest.php* request, the operator must send its id and a valid array of tours;
+- The dependency injection, as declared in *bindCustomRepositories@app/Providers/AppServiceProvider.php*, helps us to implement a *TourOperatorsContract* that is requested from the *TourOperatorsController*'s constructor. The default implementation is *app/Repositories/TourOperators/TourOperatorsDefaultRepository.php*
+- Added the `api/tour_operators/import` route management in *routes/api.php*.
+
+### 2 - Event Id
+- the *TourOperatorsDefaultRepository* requests a *app/Repositories/ImportManager/ImportManagerContract.php* in constructor. The default one is *app/Repositories/ImportManager/ImportManagerStubRepository.php*. This interface make us able to generate *event ids* in different ways, based on our implementation. The *event id* will be useful to retrieve data about this request;
+- in *importTours@TourOperatorsDefaultRepository* we first generate an event id.
+
+### 3 - Operator choice and input validation
+- the *TourOperatorsDefaultRepository* requests a *app/Repositories/OperatorToursProcessor/OperatorChooser/OperatorChooserContract.php* in constructor. The default one is *app/Repositories/OperatorToursProcessor/OperatorChooser/SimpleOperatorChooser.php*. This interface make us able to understand which operator sent the request and get the related processor;
+- through *app/Repositories/OperatorToursProcessor/OperatourToursProcessorFactory.php* we get the correct processor and make it validate the input data based on single operator references. If the content is not valid we return an error code to the operator and we free the *event id* previously generated.
+
+### 4 - Queue data
+- if sent data are valid we enqueue them using an *app/Jobs/ImportTours.php* job and send the event id back to the operator. For development purposes we are currently using a *sync* queue and a single queue pattern. Ideally we could use an asynchronous driver like Redis and dispatch on multiple queues (e.g. one for each operator).
+
+### 5 - Parse tours
+- Thank to the *OperatourToursProcessorFactory* we can get the correct operator processor for the input data and transform them to an array of *RadarTour* objects.
+
+### 6 - Store data
 
 ## Production TODO
 
