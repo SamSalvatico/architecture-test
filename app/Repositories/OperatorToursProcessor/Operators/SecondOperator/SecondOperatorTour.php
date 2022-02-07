@@ -5,13 +5,16 @@ namespace App\Repositories\OperatorToursProcessor\Operators\SecondOperator;
 use App\Models\RadarTour;
 use App\Repositories\OperatorToursProcessor\AbstractOperatorTour;
 use App\Repositories\OperatorToursProcessor\OperatorTour;
-use App\Repositories\TourOperators\ToImportToursContent;
 
 class SecondOperatorTour extends AbstractOperatorTour
 {
-    public static function box(ToImportToursContent $toImportToursContent): OperatorTour
+    public static function box(array $contentTour): OperatorTour
     {
-        return new self($toImportToursContent);
+        return new self($contentTour);
+    }
+
+    protected function fromTourContent(): void
+    {
     }
 
     public function toRadarTour(): RadarTour

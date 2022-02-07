@@ -3,18 +3,19 @@
 namespace App\Repositories\OperatorToursProcessor;
 
 use App\Models\RadarTour;
-use App\Repositories\TourOperators\ToImportToursContent;
 
 abstract class AbstractOperatorTour implements OperatorTour
 {
-    protected ToImportToursContent $toImportToursContent;
+    protected array $tourContent;
 
-    public function __construct(ToImportToursContent $toImportToursContent)
+    public function __construct(array $tourContent)
     {
-        $this->toImportToursContent = $toImportToursContent;
+        $this->tourContent = $tourContent;
+        $this->fromTourContent();
     }
 
-    abstract public static function box(ToImportToursContent $toImportToursContent): OperatorTour;
+    abstract protected function fromTourContent(): void;
+    abstract public static function box(array $tourContent): OperatorTour;
 
     abstract public function toRadarTour(): RadarTour;
 }

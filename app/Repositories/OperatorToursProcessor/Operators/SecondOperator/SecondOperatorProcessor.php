@@ -12,7 +12,11 @@ class SecondOperatorProcessor implements ProcessorContract
      */
     public function getRadarTours(ToImportToursContent $toImportToursContent): array
     {
-        return [];
+        $output = [];
+        foreach ($toImportToursContent->toursContent() as $currentTour) {
+            array_push($output, SecondOperatorTour::box($currentTour)->toRadarTour());
+        }
+        return $output;
     }
 
     /**

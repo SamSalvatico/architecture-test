@@ -27,25 +27,13 @@ class TourOperatorsDefaultRepository implements TourOperatorsContract
     ): string {
         $eventId = $this->importManager->getNextEventId();
         $toImportToursContent = ToImportToursContent::box($operatorId, $content, $eventId);
-        $enqueued = $this->tryToEnqueueTours($toImportToursContent);
-
-        if ($enqueued) {
-            return $eventId;
-        }
-
-        $this->importManager->freeEventId($eventId);
-        throw new EnqueueTourException("Cannot enqueue this import, retry later...");
-    }
-
-    private function tryToEnqueueTours(ToImportToursContent $content): bool
-    {
         try {
-            $this->enqueueTours($content);
-        } catch (Exception) {
-            return false;
+            $this->enqueueTours($toImportToursContent);
+            return $eventId;
+        } catch (EnqueueTourException $ete) {
+            $this->importManager->freeEventId($eventId);
+            throw $ete;
         }
-
-        return true;
     }
 
     private function enqueueTours(ToImportToursContent $content): void
