@@ -133,7 +133,7 @@ In order:
 3. understand which operator make the requests and provide a first level of input validation;
 4. we enqueue the input to process it asynchronously (currently, for testing purpose, the queue is set as *sync* in .env);
 5. we transform the operator tours to our own internal object;
-6. we store our objects to make other processes able to download related data and persist them definitely. 
+6. we store and send our objects to make other processes able to download related data and persist them definitely. 
 
 
 ### 1 - API
@@ -155,7 +155,8 @@ In order:
 ### 5 - Parse tours
 - Thank to the *OperatourToursProcessorFactory* we can get the correct operator processor for the input data and transform them to an array of *RadarTour* objects.
 
-### 6 - Store data
+### 6 - Store and share data
+- Using the *app/Repositories/RadarToursManager/RadarToursManagerContract.php* we can manage our RadarTours. It needs a *app/Repositories/RadarToursManager/StoreRadarTours/StoreRadarToursContract.php* and a *app/Repositories/RadarToursManager/SendRadarTours/SendRadarToursContract.php*. The first will help us to store the Tours that will be then processed and the second one will be helpful to share the updates with other services.
 
 ## Production TODO
 
