@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $name
+ * @property string $operator_id
+ */
 class RadarTour extends Model
 {
     use HasFactory;

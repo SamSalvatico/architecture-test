@@ -162,6 +162,7 @@ In order:
 
 The most important things to do before we can move the flow in a production environment are:
 - manage REST APIs authentication;
+- write APIs docs
 - choose a queue driver that make us able to asynchronously process multiple events;
 - add missing tests;
 - improve logging;

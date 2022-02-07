@@ -8,17 +8,22 @@ use App\Repositories\OperatorToursProcessor\OperatorTour;
 
 class FirstOperatorTour extends AbstractOperatorTour
 {
-    public static function box(array $contentTour): OperatorTour
+    private string $firstOperatorId;
+
+    public static function box(array $tourContent): OperatorTour
     {
-        return new self($contentTour);
+        return new self($tourContent);
     }
 
     protected function fromTourContent(): void
     {
+        $this->firstOperatorId = $this->tourContent['first_operator_id'];
     }
 
     public function toRadarTour(): RadarTour
     {
-        return new RadarTour();
+        $outputTour = new RadarTour();
+        $outputTour->operator_id = $this->firstOperatorId;
+        return $outputTour;
     }
 }
